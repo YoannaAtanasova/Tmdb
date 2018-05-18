@@ -24,5 +24,13 @@ namespace Tmdb.Contracts
 
         [DataMember(Name = "overview")]
         public string Overview { get; set; }
+
+        public string ImageFullUrl
+        {
+            get
+            {
+                return "https://image.tmdb.org/t/p/original" + ImageUrl;
+            }
+        }
     }
 }

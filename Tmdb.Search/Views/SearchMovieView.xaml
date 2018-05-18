@@ -37,6 +37,10 @@
                     Orientation="Horizontal" 
                     DataContext="{Binding MovieById}">
 
+                    <Image
+                        Margin="5"
+                        MaxHeight="100"
+                        Source="{Binding ImageFullUrl}"/>
                     <TextBlock
                         Margin="5"
                         Text="{Binding MovieId}"/>
@@ -88,6 +92,10 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
 
+                                <Image
+                                    Margin="5"
+                                    MaxHeight="100"
+                                    Source="{Binding ImageFullUrl}"/>
                                 <TextBlock
                                     Margin="5"
                                     Text="{Binding MovieId}"/>
@@ -100,7 +108,6 @@
                                 <TextBlock
                                     Margin="5"
                                     Text="{Binding Overview}"/>
-
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
