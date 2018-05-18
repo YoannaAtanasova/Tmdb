@@ -68,7 +68,7 @@
 
                     <TextBox 
                         Margin="5"
-                        Text="{Binding SearchTitle}"/>
+                        Text="{Binding SearchTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Button
                         Margin="5"

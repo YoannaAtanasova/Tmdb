@@ -11,7 +11,7 @@ namespace Tmdb.Host
     [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class TmdbService : ITmdbSearchService
     {
-        private const string ApiKey = "3736198f86152236b14d84221ed0e184";
+        private const string ApiKey = "***";
 
         public TmdbMovie SearchForMovieById(int id)
         {
@@ -19,7 +19,7 @@ namespace Tmdb.Host
             {
                 try
                 {
-                    var json = wc.DownloadString(string.Format("https://api.themoviedb.org/3/movie/{0}?api_key=3736198f86152236b14d84221ed0e184&language=en-US", id));
+                    var json = wc.DownloadString(string.Format("https://api.themoviedb.org/3/movie/{0}?api_key={1}&language=en-US", id, ApiKey));
                     JObject jObject = JObject.Parse(json);
 
                     TmdbMovie tmdbMovie = JsonConvert.DeserializeObject<TmdbMovie>(JsonConvert.SerializeObject(jObject));
@@ -40,7 +40,7 @@ namespace Tmdb.Host
             {
                 try
                 {
-                    var json = wc.DownloadString(string.Format("https://api.themoviedb.org/3/search/movie?api_key=3736198f86152236b14d84221ed0e184&query={0}", title));
+                    var json = wc.DownloadString(string.Format("https://api.themoviedb.org/3/search/movie?api_key={1}&query={0}", title, ApiKey));
                     JObject jObject = JObject.Parse(json);
 
                     var token = jObject.SelectToken("results");
