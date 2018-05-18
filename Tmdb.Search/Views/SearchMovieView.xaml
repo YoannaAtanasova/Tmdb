@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="Tmdb.Search.Views.SearchMovieView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox 
+            Grid.Row="0"
+            Margin="20" 
+            Header="Search Movie By Id">
+
+            <StackPanel 
+                Margin="5" 
+                Orientation="Vertical">
+
+                <TextBox 
+                    Margin="5" 
+                    Text="{Binding SearchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button
+                    Margin="5"
+                    Width="100"
+                    HorizontalAlignment="Right"
+                    Content="Search"
+                    Command="{Binding SearchByIdCommand}"/>
+
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    DataContext="{Binding MovieById}">
+
+                    <TextBlock
+                        Margin="5"
+                        Text="{Binding MovieId}"/>
+                    <TextBlock
+                        Margin="5"
+                        Text="{Binding Title}"/>
+                    <TextBlock
+                        Margin="5"
+                        Text="{Binding Year}"/>
+                    <TextBlock
+                        Margin="5"
+                        Text="{Binding Overview}"/>
+
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox 
+            Grid.Row="1"
+            Margin="20" 
+            Header="Search Movie By Title">
+
+            <DockPanel 
+                LastChildFill="True">
+                <StackPanel 
+                    Margin="5" 
+                    DockPanel.Dock="Top"
+                    Orientation="Vertical">
+
+                    <TextBox 
+                        Margin="5"
+                        Text="{Binding SearchTitle}"/>
+
+                    <Button
+                        Margin="5"
+                        Width="100"
+                        HorizontalAlignment="Right"
+                        Content="Search"
+                        Command="{Binding SearchByTitleCommand}"/>
+                </StackPanel>
+
+                <ListBox 
+                    DockPanel.Dock="Bottom"
+                    Margin="5"
+                    ItemsSource="{Binding MoviesByTitle}"
+                    ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBlock
+                                    Margin="5"
+                                    Text="{Binding MovieId}"/>
+                                <TextBlock
+                                    Margin="5"
+                                    Text="{Binding Title}"/>
+                                <TextBlock
+                                    Margin="5"
+                                    Text="{Binding Year}"/>
+                                <TextBlock
+                                    Margin="5"
+                                    Text="{Binding Overview}"/>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>
