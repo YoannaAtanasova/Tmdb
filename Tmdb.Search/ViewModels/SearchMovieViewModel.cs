@@ -142,11 +142,11 @@ namespace Tmdb.Search.ViewModels
             {
 
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
-            
+
 
             factory.Close();
         }
@@ -160,7 +160,7 @@ namespace Tmdb.Search.ViewModels
             {
                 MoviesByTitle = proxy.SerachFormMovieByTitle(SearchTitle.Replace(" ", "+"));
             }
-            catch(FaultException)
+            catch (FaultException)
             {
 
             }
@@ -168,7 +168,7 @@ namespace Tmdb.Search.ViewModels
             {
 
             }
-            
+
 
             factory.Close();
         }
