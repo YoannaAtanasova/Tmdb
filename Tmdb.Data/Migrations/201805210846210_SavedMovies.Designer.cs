@@ -13,7 +13,7 @@ namespace Tmdb.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201805210700497_SavedMovies"; }
+            get { return "201805210846210_SavedMovies"; }
         }
         
         string IMigrationMetadata.Source

@@ -5,6 +5,19 @@
         Title="Shell" Height="700" Width="900"
          MinHeight="450" MinWidth="800">
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="SearchMovieRegion"/>
+        <TabControl prism:RegionManager.RegionName="MainTabControl">
+            <TabItem Header="Search Movies">
+                <ContentControl prism:RegionManager.RegionName="SearchMovieRegion"/>
+            </TabItem>
+            <TabItem Header="Saved Movies">
+                <ContentControl prism:RegionManager.RegionName="SavedMoviesRegion"/>
+            </TabItem>
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Height" Value="25" />
+                </Style>
+            </TabControl.ItemContainerStyle>
+        </TabControl>
+        
     </Grid>
 </Window>

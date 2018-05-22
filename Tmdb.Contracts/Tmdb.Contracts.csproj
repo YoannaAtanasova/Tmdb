@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMovieService.cs" />
     <Compile Include="ITmdbSearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TmdbMovie.cs" />

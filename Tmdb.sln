@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contract", "Contract", "{0D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tmdb.Data", "Tmdb.Data\Tmdb.Data.csproj", "{2830B5DD-B4F7-45A0-9110-E2EEE309BFB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tmdb.Core", "Tmdb.Core\Tmdb.Core.csproj", "{98EFC759-B17D-47E5-B3AF-BAA1DFD8A4DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{2830B5DD-B4F7-45A0-9110-E2EEE309BFB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2830B5DD-B4F7-45A0-9110-E2EEE309BFB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2830B5DD-B4F7-45A0-9110-E2EEE309BFB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98EFC759-B17D-47E5-B3AF-BAA1DFD8A4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98EFC759-B17D-47E5-B3AF-BAA1DFD8A4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98EFC759-B17D-47E5-B3AF-BAA1DFD8A4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98EFC759-B17D-47E5-B3AF-BAA1DFD8A4DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{35D8AD4B-55E1-492A-9C22-DA0C2E85A850} = {CBCEF112-218B-4B56-9853-DA5636A5EE4C}
 		{95BCD8E2-CD19-4251-AE7B-1BA45278C25F} = {0D0252B2-2A50-4D9A-8BEF-958B4FEFC7D3}
 		{E38CF309-F0C4-4CE8-A8E4-1AB304836A1B} = {C25D5E4C-62F5-49F5-9D88-30E6A65B6097}
+		{98EFC759-B17D-47E5-B3AF-BAA1DFD8A4DE} = {C25D5E4C-62F5-49F5-9D88-30E6A65B6097}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E34B652-AD99-492E-86D1-A02D9370D25E}

@@ -19,6 +19,7 @@ namespace Tmdb.Search
         public void Initialize()
         {
             regionManager.RegisterViewWithRegion("SearchMovieRegion", typeof(SearchMovieView));
+            regionManager.RegisterViewWithRegion("SavedMoviesRegion", typeof(SavedMoviesView));
         }
     }
 }

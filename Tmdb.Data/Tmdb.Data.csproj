@@ -47,9 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201805210700497_SavedMovies.cs" />
-    <Compile Include="Migrations\201805210700497_SavedMovies.Designer.cs">
-      <DependentUpon>201805210700497_SavedMovies.cs</DependentUpon>
+    <Compile Include="Migrations\201805210846210_SavedMovies.cs" />
+    <Compile Include="Migrations\201805210846210_SavedMovies.Designer.cs">
+      <DependentUpon>201805210846210_SavedMovies.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SavedMovie.cs" />
@@ -63,12 +63,14 @@
     <Compile Include="TmdbDataContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805210700497_SavedMovies.resx">
-      <DependentUpon>201805210700497_SavedMovies.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805210846210_SavedMovies.resx">
+      <DependentUpon>201805210846210_SavedMovies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

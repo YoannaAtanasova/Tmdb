@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using Tmdb.Contracts;
+using Tmdb.Core.Events;
 
 namespace Tmdb.Search.ViewModels
 {
@@ -20,17 +22,23 @@ namespace Tmdb.Search.ViewModels
 
         private TmdbMovie movieById;
 
+        private TmdbMovie selectedMovie;
+
         private List<TmdbMovie> moviesByTitle;
+
+        private IEventAggregator eventAggregator;
 
         DelegateCommand searchByIdCommand;
 
         DelegateCommand searchByTitleCommand;
 
+        DelegateCommand saveSelectedMovieCommand;
+
         #endregion
 
-        public SearchMovieViewModel()
+        public SearchMovieViewModel(IEventAggregator eventAggregator)
         {
-
+            this.eventAggregator = eventAggregator;
         }
 
         #region Properties
@@ -83,6 +91,22 @@ namespace Tmdb.Search.ViewModels
             }
         }
 
+        public TmdbMovie SelectedMovie
+        {
+            get
+            {
+                return selectedMovie;
+            }
+
+            set
+            {
+                if (selectedMovie == value) return;
+
+                selectedMovie = value;
+                OnPropertyChanged("SelectedMovie");
+            }
+        }
+
         public List<TmdbMovie> MoviesByTitle
         {
             get
@@ -125,6 +149,17 @@ namespace Tmdb.Search.ViewModels
             }
         }
 
+        public DelegateCommand SaveSelectedMovieCommand
+        {
+            get
+            {
+                if (saveSelectedMovieCommand != null) return saveSelectedMovieCommand;
+
+                saveSelectedMovieCommand = new DelegateCommand(SaveSelectedMovie);
+                return saveSelectedMovieCommand;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -137,6 +172,8 @@ namespace Tmdb.Search.ViewModels
             try
             {
                 MovieById = proxy.SearchForMovieById(SearchId);
+                SelectedMovie = MovieById;
+                MoviesByTitle = null;
             }
             catch (FaultException)
             {
@@ -146,7 +183,6 @@ namespace Tmdb.Search.ViewModels
             {
 
             }
-
 
             factory.Close();
         }
@@ -159,6 +195,8 @@ namespace Tmdb.Search.ViewModels
             try
             {
                 MoviesByTitle = proxy.SerachFormMovieByTitle(SearchTitle.Replace(" ", "+"));
+                SelectedMovie = null;
+                MovieById = null;
             }
             catch (FaultException)
             {
@@ -169,8 +207,27 @@ namespace Tmdb.Search.ViewModels
 
             }
 
-
             factory.Close();
+        }
+
+        public void SaveSelectedMovie()
+        {
+            ChannelFactory<IMovieService> factory = new ChannelFactory<IMovieService>("");
+            IMovieService proxy = factory.CreateChannel();
+
+            try
+            {
+                proxy.SaveMovie(SelectedMovie);
+                eventAggregator.GetEvent<NewSavedMovieEvent>().Publish();
+            }
+            catch (FaultException)
+            {
+
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         #endregion

@@ -12,15 +12,16 @@ namespace Tmdb.Host
     {
         static void Main(string[] args)
         {
-            using (ServiceHost host = new ServiceHost(typeof(TmdbService)))
-            {
-                host.Open();
+            ServiceHost hostSearch = new ServiceHost(typeof(TmdbService));
+            ServiceHost hostMovie = new ServiceHost(typeof(MovieService));
+            hostSearch.Open();
+            hostMovie.Open();
 
-                Console.WriteLine("press enter to exit");
-                Console.ReadLine();
+            Console.WriteLine("press enter to exit");
+            Console.ReadLine();
 
-                host.Close();
-            }
+            hostSearch.Close();
+            hostMovie.Close();
         }
     }
 }
