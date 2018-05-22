@@ -3,6 +3,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -24,15 +25,15 @@ namespace Tmdb.Search.ViewModels
 
         private TmdbMovie selectedMovie;
 
-        private List<TmdbMovie> moviesByTitle;
+        private ObservableCollection<TmdbMovie> moviesByTitle;
 
         private IEventAggregator eventAggregator;
 
-        DelegateCommand searchByIdCommand;
+        private DelegateCommand searchByIdCommand;
 
-        DelegateCommand searchByTitleCommand;
+        private DelegateCommand searchByTitleCommand;
 
-        DelegateCommand saveSelectedMovieCommand;
+        private DelegateCommand saveSelectedMovieCommand;
 
         #endregion
 
@@ -52,10 +53,7 @@ namespace Tmdb.Search.ViewModels
 
             set
             {
-                if (searchId == value) return;
-
-                searchId = value;
-                OnPropertyChanged("SearchId");
+                SetProperty(ref searchId, value);
             }
         }
 
@@ -68,10 +66,7 @@ namespace Tmdb.Search.ViewModels
 
             set
             {
-                if (searchTitle == value) return;
-
-                searchTitle = value;
-                OnPropertyChanged("SearchTitle");
+                SetProperty(ref searchTitle, value);
             }
         }
 
@@ -84,10 +79,7 @@ namespace Tmdb.Search.ViewModels
 
             set
             {
-                if (movieById == value) return;
-
-                movieById = value;
-                OnPropertyChanged("MovieById");
+                SetProperty(ref movieById, value);
             }
         }
 
@@ -100,14 +92,11 @@ namespace Tmdb.Search.ViewModels
 
             set
             {
-                if (selectedMovie == value) return;
-
-                selectedMovie = value;
-                OnPropertyChanged("SelectedMovie");
+                SetProperty(ref selectedMovie, value);
             }
         }
 
-        public List<TmdbMovie> MoviesByTitle
+        public ObservableCollection<TmdbMovie> MoviesByTitle
         {
             get
             {
@@ -116,10 +105,7 @@ namespace Tmdb.Search.ViewModels
 
             set
             {
-                if (moviesByTitle == value) return;
-
-                moviesByTitle = value;
-                OnPropertyChanged("MoviesByTitle");
+                SetProperty(ref moviesByTitle, value);
             }
         }
 
@@ -194,7 +180,7 @@ namespace Tmdb.Search.ViewModels
 
             try
             {
-                MoviesByTitle = proxy.SerachFormMovieByTitle(SearchTitle.Replace(" ", "+"));
+                MoviesByTitle = new ObservableCollection<TmdbMovie>(proxy.SerachFormMovieByTitle(SearchTitle.Replace(" ", "+")));
                 SelectedMovie = null;
                 MovieById = null;
             }

@@ -17,6 +17,8 @@ namespace Tmdb.Search.ViewModels
     {
         #region Declarations
 
+        private ObservableCollection<TmdbMovie> savedMovies;
+
         private IEventAggregator eventAggregator;
 
         #endregion
@@ -31,7 +33,19 @@ namespace Tmdb.Search.ViewModels
 
         #region Properties
 
-        public ObservableCollection<TmdbMovie> SavedMovies { get; set; }
+        public ObservableCollection<TmdbMovie> SavedMovies
+        {
+            get
+            {
+                return savedMovies;
+            }
+
+            set
+            {
+                SetProperty(ref savedMovies, value);
+            }
+        }
+
 
         public string DisplayName { get; set; }
 
@@ -46,7 +60,6 @@ namespace Tmdb.Search.ViewModels
                 ChannelFactory<IMovieService> factory = new ChannelFactory<IMovieService>("");
                 IMovieService proxy = factory.CreateChannel();
                 SavedMovies = new ObservableCollection<TmdbMovie>(proxy.GetSavedMovies());
-                OnPropertyChanged("SavedMovies");
                 factory.Close();
             }
             catch (FaultException)
