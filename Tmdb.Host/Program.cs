@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using Tmdb.Contracts;
 
 namespace Tmdb.Host
 {
@@ -14,6 +9,7 @@ namespace Tmdb.Host
         {
             ServiceHost hostSearch = new ServiceHost(typeof(TmdbService));
             ServiceHost hostMovie = new ServiceHost(typeof(MovieService));
+
             hostSearch.Open();
             hostMovie.Open();
 

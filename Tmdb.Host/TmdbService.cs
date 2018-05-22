@@ -11,7 +11,7 @@ namespace Tmdb.Host
     [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class TmdbService : ITmdbSearchService
     {
-        private const string ApiKey = "3736198f86152236b14d84221ed0e184";
+        private const string ApiKey = "***";
 
         public TmdbMovie SearchForMovieById(int id)
         {
