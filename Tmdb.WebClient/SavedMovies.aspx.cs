@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using Tmdb.Contracts;
 
 namespace Tmdb.WebClient
 {
@@ -13,24 +8,36 @@ namespace Tmdb.WebClient
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+            if (!Page.IsPostBack)
             {
-                ChannelFactory<IMovieService> factory = new ChannelFactory<IMovieService>("");
-                IMovieService proxy = factory.CreateChannel();
-
-                SearchMovieRepeater.DataSource = proxy.GetSavedMovies();
-                SearchMovieRepeater.DataBind();
-
-                factory.Close();
-            }
-            catch (FaultException)
-            {
-
-            }
-            catch (Exception)
-            {
-
+                Session["VisibleItem"] = null;
             }
         }
+
+        protected void SearchMovieRepeater_ItemCommand(object source, DataListCommandEventArgs e)
+        {
+            if (e.CommandName == "ShowDetails")
+            {
+                Session["VisibleItem"] = (string)e.CommandArgument;
+                SearchMovieRepeater.DataBind();
+            }
+            else if (e.CommandName == "Delete")
+            {
+                ObjectDataSource1.DeleteParameters["movieId"].DefaultValue = e.CommandArgument.ToString();
+                ObjectDataSource1.Delete();
+                SearchMovieRepeater.DataBind();
+            }
+        }     
+
+        protected void SearchMovieRepeater_ItemDataBound(object sender, DataListItemEventArgs e)
+        {
+            Label label = (Label)e.Item.FindControl("MovieIdLabel");
+
+            if (label.Text == (string)Session["VisibleItem"])
+            {
+                ((Panel)e.Item.FindControl("movieDetails")).Visible = true;
+            }
+        }
+
     }
 }

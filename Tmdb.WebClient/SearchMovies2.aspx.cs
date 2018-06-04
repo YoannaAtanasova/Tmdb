@@ -9,21 +9,30 @@ using Tmdb.Contracts;
 
 namespace Tmdb.WebClient
 {
-    public partial class WebForm1 : Page
+    public partial class SearchMovies2 : System.Web.UI.Page
     {
-        protected override void OnInit(EventArgs e)
+        private IList<TmdbMovie> savedMovies;
+
+        private IList<TmdbMovie> SavedMovies
         {
-            base.OnInit(e);
-            //this.PreRender += WebForm1_PreRender;
+            get
+            {
+                if (savedMovies != null) return savedMovies;
+
+                TmdbSavedMoviesBLL tmdbSavedMoviesBLL = new TmdbSavedMoviesBLL();
+                savedMovies = tmdbSavedMoviesBLL.GetMovies();
+
+                return savedMovies;
+            }
         }
 
-        private void Page_PreRender(object sender, EventArgs e)
-        {
-            //if (Page.IsPostBack)
-            //{
-            //    this.DataBind();
-            //}
-        }
+        //private void Page_PreRender(object sender, EventArgs e)
+        //{
+        //    if (Page.IsPostBack)
+        //    {
+        //        this.DataBind();
+        //    }
+        //}
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -38,8 +47,8 @@ namespace Tmdb.WebClient
         {
             Session["VisibleItem"] = null;
             Session["SearchTitle"] = SearchTextBox.Text;
-            SearchMovieRepeater.DataSource = SearchMovies(SearchTextBox.Text);
-            SearchMovieRepeater.DataBind();
+
+            RebindData();
 
             ResetRadioButtons();
         }
@@ -63,18 +72,18 @@ namespace Tmdb.WebClient
             ShowAll.Checked = true;
         }
 
+        private void RebindData()
+        {
+            SearchMovieRepeater.DataSource = SearchMovies((string)Session["SearchTitle"]);
+            SearchMovieRepeater.DataBind();
+        }
+
         protected void SearchMovieRepeater_ItemCommand(object source, DataListCommandEventArgs e)
         {
-            if( e.CommandName == "ShowDetails")
+            if (e.CommandName == "ShowDetails")
             {
                 Session["VisibleItem"] = e.CommandArgument;
-
-                if (ShowAll.Checked)
-                    ShowAll_CheckedChanged(source, e);
-                else if (FadeWatched.Checked)
-                    FadeWatched_CheckedChanged(source, e);
-                else if (FilterOutWatched.Checked)
-                    FilterOutWatched_CheckedChanged(source, e);
+                RebindData();
             }
             else if (e.CommandName == "Save")
             {
@@ -104,45 +113,30 @@ namespace Tmdb.WebClient
 
             if (label != null && label.Text == (string)Session["VisibleItem"])
             {
-                ((Panel)e.Item.FindControl("movieDetails")).Visible = true;
+                ((Panel)e.Item.FindControl("movieDetails")).Visible = false;              
             }
-        }
 
-        protected void ShowAll_CheckedChanged(object sender, EventArgs e)
-        {
-            SearchMovieRepeater.DataSource = SearchMovies((string)Session["SearchTitle"]);
-            SearchMovieRepeater.DataBind();
-        }
+            int movieId = int.Parse(label.Text);
 
-        protected void FadeWatched_CheckedChanged(object sender, EventArgs e)
-        {
-            SearchMovieRepeater.DataSource = SearchMovies((string)Session["SearchTitle"]);
-            SearchMovieRepeater.DataBind();
-
-            TmdbSavedMoviesBLL tmdbSavedMoviesBLL = new TmdbSavedMoviesBLL();
-            IList<TmdbMovie> savedMovies = tmdbSavedMoviesBLL.GetMovies();
-
-            foreach (var item in SearchMovieRepeater.Items)
+            if (FadeWatched.Checked)
             {
-                DataListItem dataListItem = (DataListItem)item;
-                int gameId = int.Parse(((Label)dataListItem.FindControl("MovieIdLabel")).Text);
-
-                if (savedMovies.Any(s => s.MovieId == gameId))
+                if (SavedMovies.Any(s=>s.MovieId == movieId))
                 {
-                    ((Panel)dataListItem.FindControl("MoviePanel")).Style.Add("opacity", "0.5");
+                    ((Panel)e.Item.FindControl("MoviePanel")).Style.Add("opacity", "0.5");
+                }                
+            }
+            else if (FilterOutWatched.Checked)
+            {
+                if (SavedMovies.Any(s => s.MovieId == movieId))
+                {
+                    ((Panel)e.Item.FindControl("MoviePanel")).Visible = false;
                 }
             }
         }
 
-        protected void FilterOutWatched_CheckedChanged(object sender, EventArgs e)
+        protected void FilterMovies_CheckedChanged(object sender, EventArgs e)
         {
-            if (Session["SearchTitle"] != null)
-            {
-                TmdbSavedMoviesBLL tmdbSavedMoviesBLL = new TmdbSavedMoviesBLL();
-                IList<TmdbMovie> savedMovies = tmdbSavedMoviesBLL.GetMovies();
-                SearchMovieRepeater.DataSource = SearchMovies((string)Session["SearchTitle"]).Where(m => !savedMovies.Any(s => s.MovieId == m.MovieId));
-                SearchMovieRepeater.DataBind();
-            }
+            RebindData();
         }
     }
 }

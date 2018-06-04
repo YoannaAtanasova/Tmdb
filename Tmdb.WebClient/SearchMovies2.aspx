@@ -1,5 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SearchMovie.aspx.cs" Inherits="Tmdb.WebClient.WebForm1" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SearchMovies2.aspx.cs" Inherits="Tmdb.WebClient.SearchMovies2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <br />
     <table class="nav-justified">
@@ -8,9 +7,9 @@
             <td>
                 <asp:TextBox ID="SearchTextBox" runat="server" Style="margin-left: 24px; margin-right: 35px" Width="737px"></asp:TextBox>
                 <asp:Button ID="SearchButton" runat="server" OnClick="SearchButton_Click" Text="Search" />
-                <asp:RadioButton ID="ShowAll" Text="Show All Movies" runat="server" GroupName="FilterMovies" OnCheckedChanged="ShowAll_CheckedChanged"  AutoPostBack="True" Checked="true"/>
-                <asp:RadioButton ID="FadeWatched" Text="Fade Watched Movies" runat="server" GroupName="FilterMovies" OnCheckedChanged="FadeWatched_CheckedChanged"  AutoPostBack="True"/>
-                <asp:RadioButton ID="FilterOutWatched" Text="Filterout Watched Movies" runat="server" GroupName="FilterMovies" OnCheckedChanged="FilterOutWatched_CheckedChanged"  AutoPostBack="True"/>
+                <asp:RadioButton ID="ShowAll" Text="Show All Movies" runat="server" GroupName="FilterMovies" OnCheckedChanged="FilterMovies_CheckedChanged"  AutoPostBack="True" Checked="true"/>
+                <asp:RadioButton ID="FadeWatched" Text="Fade Watched Movies" runat="server" GroupName="FilterMovies" OnCheckedChanged="FilterMovies_CheckedChanged"  AutoPostBack="True"/>
+                <asp:RadioButton ID="FilterOutWatched" Text="Filterout Watched Movies" runat="server" GroupName="FilterMovies" OnCheckedChanged="FilterMovies_CheckedChanged"  AutoPostBack="True"/>
             </td>
             <td>&nbsp;</td>
         </tr>

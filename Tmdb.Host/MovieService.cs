@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 using Tmdb.Contracts;
 using Tmdb.Data.Models;
@@ -27,7 +28,7 @@ namespace Tmdb.Host
                 unitOfWork = new UnitOfWork();
                 return unitOfWork;
             }
-        }
+        }        
 
         #endregion
 
@@ -52,6 +53,11 @@ namespace Tmdb.Host
             return moviesToReturn;
         }
 
+        public bool ChackIfMovieExists(int movieId)
+        {
+            return UnitOfWork.SavedMoviesRepository.Get(movieId) != null;
+        }
+
         public void SaveMovie(TmdbMovie tmdbMovie)
         {
             if (tmdbMovie != null)
@@ -73,5 +79,13 @@ namespace Tmdb.Host
             }
 
         }
+
+        public void DeleteMovie(int id)
+        {
+            SavedMovie movieToDelete = UnitOfWork.SavedMoviesRepository.Get(id);
+            UnitOfWork.SavedMoviesRepository.Remove(movieToDelete);
+            UnitOfWork.Commit();
+        }
+
     }
 }

@@ -10,7 +10,7 @@
 namespace Tmdb.WebClient {
     
     
-    public partial class WebForm1 {
+    public partial class SearchMovies2 {
         
         /// <summary>
         /// SearchTextBox control.

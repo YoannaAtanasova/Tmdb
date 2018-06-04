@@ -12,5 +12,11 @@ namespace Tmdb.Contracts
 
         [OperationContract]
         ICollection<TmdbMovie> GetSavedMovies();
+
+        [OperationContract]
+        void DeleteMovie(int id);
+
+        [OperationContract]
+        bool ChackIfMovieExists(int movieId);
     }
 }
