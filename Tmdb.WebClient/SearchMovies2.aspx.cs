@@ -37,7 +37,7 @@ namespace Tmdb.WebClient
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
-            {
+            {    
                 Session["VisibleItem"] = null;
                 Session["SearchTitle"] = null;
             }
@@ -100,8 +100,8 @@ namespace Tmdb.WebClient
         {
             ChannelFactory<ITmdbSearchService> factory = new ChannelFactory<ITmdbSearchService>("");
             ITmdbSearchService proxy = factory.CreateChannel();
-            TmdbMovie movieToReturn = null;
-            movieToReturn = proxy.SearchForMovieById(id);
+
+            TmdbMovie movieToReturn = proxy.SearchForMovieById(id);
 
             factory.Close();
             return movieToReturn;
@@ -109,11 +109,12 @@ namespace Tmdb.WebClient
 
         protected void SearchMovieRepeater_ItemDataBound(object sender, DataListItemEventArgs e)
         {
-            Label label = (Label)e.Item.FindControl("MovieIdLabel");
+            UserControl userControl = (UserControl)e.Item.FindControl("MoviesDataList");
+            Label label = (Label)userControl.FindControl("MovieIdLabel");
 
             if (label != null && label.Text == (string)Session["VisibleItem"])
             {
-                ((Panel)e.Item.FindControl("movieDetails")).Visible = false;              
+                ((Panel)userControl.FindControl("movieDetails")).Visible = true;              
             }
 
             int movieId = int.Parse(label.Text);
